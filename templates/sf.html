@@ -1,0 +1,89 @@
+<!-- Google Maps Embed -->
+<iframe 
+    width="600" 
+    height="800" 
+    frameborder="0" 
+    style="width: 700px; height: 500px; position: absolute; top: 170px; right: 75px; border: 1px solid black;" 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.678484258914!2d-122.41941658465349!3d37.77492957975765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808580f5c30b9d21%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1617228841309!5m2!1sen!2s">
+</iframe>
+
+</div>
+<form action="/predict" method="post">
+<div style="width: 1500px; height: 0px; left: 80px; top: 112px; position: absolute; border: 1px black solid"></div>
+<div style="left: 80px; top: 40px; position: absolute; color: black; font-size: 50px; font-family: Montserrat; font-weight: 400; word-wrap: break-word">Crime Predictor - San Francisco</div>
+
+
+<!-- Time -->
+<div id="timeDiv" style="left: 79.73px; top: 156px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Time</div>
+  <input type="text" id="timeInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<!-- Weekday -->
+<div id="weekdayDiv" style="left: 79.73px; top: 248.60px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Weekday</div>
+  <input type="text" id="weekdayInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<!-- Police District -->
+<div id="policeDistrictDiv" style="left: 79.73px; top: 341.19px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Police District</div>
+  <input type="text" id="policeDistrictInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<!-- Address -->
+<div id="addressDiv" style="left: 79px; top: 433.79px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Address</div>
+  <input type="text" id="addressInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<!-- Longitude -->
+<div id="longitudeDiv" style="left: 79.73px; top: 526.39px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Longitude</div>
+  <input type="text" id="longitudeInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<!-- Latitude -->
+<div id="latitudeDiv" style="left: 79.73px; top: 618.99px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px; display: inline-flex">
+  <div style="color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Latitude</div>
+  <input type="text" id="latitudeInput" style="width: 272.92px; height: 39.98px; border-radius: 5.83px; border: 1.46px #D0D0D0 solid">
+</div>
+
+<div style="padding-left: 36.46px; padding-right: 36.46px; padding-top: 8.75px; padding-bottom: 8.75px; left: 131.73px; top: 723.99px; position: absolute; background: red; border-radius: 5.83px; overflow: hidden; justify-content: center; align-items: center; gap: 5.83px; display: inline-flex">
+  <button onclick="displayPrediction()" style="text-align: center; background-color: red ; color: white; border:0px; font-size: 14.58px; font-family: Montserrat; font-weight: 600; text-transform: uppercase; word-wrap: break-word">Prediction</button>
+</div>
+
+<!-- Prediction Display -->
+<div id="predictionDisplay" style="left: 79.73px; top: 800px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 7.29px;">
+    <div style="text-align: center; color: black; font-size: 18.23px; font-family: Montserrat; font-weight: 300; word-wrap: break-word">Prediction:</div>
+    <div id="displayPredictionText" style="text-align: center; color: black; font-size: 14.58px; font-family: Montserrat; font-weight: 600; text-transform: uppercase; word-wrap: break-word">
+        <!-- Your prediction text goes here -->
+    </div>
+</div>
+
+        {% if prediction %}
+            {{ prediction }}
+        {% endif %}
+    </div>
+  
+</div></form>
+
+
+
+<script>
+
+    function displayPrediction() {
+        const time = document.getElementById("timeInput").value;
+        const weekday = document.getElementById("weekdayInput").value;
+        const policeDistrict = document.getElementById("policeDistrictInput").value;
+        const address = document.getElementById("addressInput").value;
+        const longitude = document.getElementById("longitudeInput").value;
+        const latitude = document.getElementById("latitudeInput").value;
+      
+        const predictionText = Time: ${time}, Weekday: ${weekday}, Police District: ${policeDistrict}, Address: ${address}, Longitude: ${longitude}, Latitude: ${latitude};
+      
+        document.getElementById("displayPredictionText").textContent = predictionText;
+        document.getElementById("predictionDisplay").style.display = "flex";
+      }
+      
+</script>
